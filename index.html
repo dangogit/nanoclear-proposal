@@ -756,6 +756,160 @@
       font-weight: 600;
     }
 
+    /* ── Retainer ── */
+    .retainer-section {
+      padding: 100px 0;
+    }
+
+    .retainer-intro {
+      font-size: 16px;
+      color: var(--text-mid);
+      max-width: 680px;
+      margin-inline-start: auto;
+      margin-bottom: 56px;
+      line-height: 1.8;
+    }
+
+    .retainer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 720px) {
+      .retainer-grid { grid-template-columns: 1fr; }
+    }
+
+    .retainer-card {
+      background: var(--card);
+      padding: 36px 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-inline-start: 1px solid var(--border-s);
+      transition: background 0.3s;
+    }
+
+    .retainer-card:first-child { border-inline-start: none; }
+
+    .retainer-card:hover { background: var(--bg3); }
+
+    .retainer-card.featured {
+      background: var(--bg3);
+      border-top: 2px solid var(--gold);
+    }
+
+    .retainer-tier {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .retainer-name {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .retainer-price {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 38px;
+      font-weight: 500;
+      color: var(--gold-l);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .retainer-price-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      margin-bottom: 28px;
+    }
+
+    .retainer-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border-s);
+      margin-bottom: 24px;
+    }
+
+    .retainer-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .retainer-features li {
+      font-size: 13.5px;
+      color: var(--text-mid);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .retainer-features li::before {
+      content: '—';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .retainer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 24px;
+      padding: 10px 14px;
+      background: var(--gold-dim2);
+      border: 1px solid var(--border-s);
+      border-radius: 2px;
+    }
+
+    .retainer-badge-item {
+      text-align: center;
+    }
+
+    .retainer-badge-val {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--gold-l);
+    }
+
+    .retainer-badge-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .retainer-badge-sep {
+      width: 1px;
+      height: 28px;
+      background: var(--border-s);
+    }
+
+    .retainer-note {
+      margin-top: 36px;
+      padding: 18px 22px;
+      background: var(--gold-dim2);
+      border-right: 3px solid var(--gold);
+      font-size: 13.5px;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
     /* ── Footer ── */
     footer {
       padding: 48px 24px;
@@ -845,6 +999,7 @@
       <li><a href="#optional">אופציונלי</a></li>
       <li><a href="#pricing">מחיר</a></li>
       <li><a href="#terms">תנאים</a></li>
+      <li><a href="#retainer">תמיכה</a></li>
     </ul>
   </nav>
 
@@ -1225,7 +1380,7 @@
     <div class="container">
       <div class="section-header reveal">
         <span class="section-num">04 / לוח זמנים</span>
-        <h2 class="section-title">12 שבועות לגרסה 1</h2>
+        <h2 class="section-title">8 שבועות לגרסה 1</h2>
         <div class="section-line"></div>
       </div>
       <div class="reveal">
@@ -1238,19 +1393,22 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td style="text-align:center">1–2</td><td style="text-align:center">2</td><td>תשתית טכנית וסביבת פיתוח</td></tr>
-            <tr><td style="text-align:center">2–3</td><td style="text-align:center">1.5</td><td>מסכי אימות והתחברות</td></tr>
-            <tr><td style="text-align:center">3–5</td><td style="text-align:center">2.5</td><td>אוסף השעונים האישי</td></tr>
-            <tr><td style="text-align:center">5–6</td><td style="text-align:center">2</td><td>קטלוג ועיון בשעונים</td></tr>
-            <tr><td style="text-align:center">6–7</td><td style="text-align:center">1.5</td><td>פרופיל משתמש ודפי תוכן</td></tr>
-            <tr><td style="text-align:center">7–9</td><td style="text-align:center">3</td><td>מפת סיכונים אינטראקטיבית</td></tr>
-            <tr><td style="text-align:center">9–10</td><td style="text-align:center">3.5</td><td>Travel Mode</td></tr>
-            <tr><td style="text-align:center">10–11</td><td style="text-align:center">2.5</td><td>Backend: אזורי סיכון + Admin</td></tr>
-            <tr><td style="text-align:center">11</td><td style="text-align:center">1</td><td>אבטחה ותיקוני שרת</td></tr>
-            <tr><td style="text-align:center">11–12</td><td style="text-align:center">2</td><td>פריסה ובניית חבילות נייד</td></tr>
+            <tr><td style="text-align:center">1</td><td style="text-align:center">2</td><td>תשתית טכנית וסביבת פיתוח</td></tr>
+            <tr><td style="text-align:center">1–2</td><td style="text-align:center">1.5</td><td>מסכי אימות והתחברות</td></tr>
+            <tr><td style="text-align:center">2–3</td><td style="text-align:center">2.5</td><td>אוסף השעונים האישי</td></tr>
+            <tr><td style="text-align:center">3</td><td style="text-align:center">2</td><td>קטלוג ועיון בשעונים</td></tr>
+            <tr><td style="text-align:center">4</td><td style="text-align:center">1.5</td><td>פרופיל משתמש ודפי תוכן</td></tr>
+            <tr><td style="text-align:center">4–5</td><td style="text-align:center">3</td><td>מפת סיכונים אינטראקטיבית</td></tr>
+            <tr><td style="text-align:center">5–6</td><td style="text-align:center">3.5</td><td>Travel Mode</td></tr>
+            <tr><td style="text-align:center">6–7</td><td style="text-align:center">2.5</td><td>Backend: אזורי סיכון + Admin</td></tr>
+            <tr><td style="text-align:center">7</td><td style="text-align:center">1</td><td>אבטחה ותיקוני שרת</td></tr>
+            <tr><td style="text-align:center">7–8</td><td style="text-align:center">2</td><td>פריסה ובניית חבילות נייד</td></tr>
             <tr><td style="text-align:center">שוטף</td><td style="text-align:center">1</td><td>ניהול פרויקט ותיאום</td></tr>
           </tbody>
         </table>
+        <p style="margin-top:18px; font-size:13px; color:var(--text-dim); text-align:right;">
+          * קצב עבודה: <strong style="color:var(--text-mid)">3 ימי עבודה בשבוע</strong> — הפצות הלוח גמישות ויכולות להתקצר בהתאם לזמינות ולקצב האישור מהלקוח.
+        </p>
       </div>
     </div>
   </section>
@@ -1368,6 +1526,111 @@
           <span><strong>Mapbox API Key:</strong> נדרש חשבון חינמי ב-mapbox.com. 50,000 טעינות מפה לחודש ללא עלות — נדרש מהלקוח לפני שלב 6.</span>
         </li>
       </ul>
+    </div>
+  </section>
+
+  <!-- 7. Retainer -->
+  <section class="retainer-section" id="retainer">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-num">07 / תמיכה שוטפת</span>
+        <h2 class="section-title">חבילות תחזוקה ותמיכה</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <p class="retainer-intro reveal">
+        לאחר ההשקה ניתן לבחור חבילת ריטיינר חודשית לתחזוקה שוטפת, עדכוני אבטחה, ותמיכה מועדפת.
+        הצעת המחיר כוללת <strong>30 ימי תמיכה חינמית</strong> מיום המסירה הסופית.
+      </p>
+
+      <div class="retainer-grid reveal">
+
+        <!-- Basic -->
+        <div class="retainer-card">
+          <div class="retainer-tier">בסיסי</div>
+          <div class="retainer-name">Basic</div>
+          <div class="retainer-price">₪4,000</div>
+          <div class="retainer-price-sub">לחודש · כולל מע"מ</div>
+          <div class="retainer-divider"></div>
+          <ul class="retainer-features">
+            <li>תיקוני באגים ותקלות</li>
+            <li>עדכוני אבטחה ותלויות</li>
+            <li>ניטור זמינות שרת</li>
+            <li>זמן תגובה: 5 ימי עסקים</li>
+          </ul>
+          <div class="retainer-badge">
+            <div class="retainer-badge-item">
+              <div class="retainer-badge-val">2</div>
+              <div class="retainer-badge-label">ימים/חודש</div>
+            </div>
+            <div class="retainer-badge-sep"></div>
+            <div class="retainer-badge-item">
+              <div class="retainer-badge-val">5 יום</div>
+              <div class="retainer-badge-label">זמן תגובה</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Standard -->
+        <div class="retainer-card featured">
+          <div class="retainer-tier">מומלץ</div>
+          <div class="retainer-name">Standard</div>
+          <div class="retainer-price">₪8,000</div>
+          <div class="retainer-price-sub">לחודש · כולל מע"מ</div>
+          <div class="retainer-divider"></div>
+          <ul class="retainer-features">
+            <li>כל שירותי החבילה הבסיסית</li>
+            <li>שיפורי UI ושינויים קטנים</li>
+            <li>התאמות לגרסאות iOS / Android חדשות</li>
+            <li>תמיכה מועדפת ב-Slack</li>
+            <li>זמן תגובה: 2 ימי עסקים</li>
+          </ul>
+          <div class="retainer-badge">
+            <div class="retainer-badge-item">
+              <div class="retainer-badge-val">5</div>
+              <div class="retainer-badge-label">ימים/חודש</div>
+            </div>
+            <div class="retainer-badge-sep"></div>
+            <div class="retainer-badge-item">
+              <div class="retainer-badge-val">2 ימים</div>
+              <div class="retainer-badge-label">זמן תגובה</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Premium -->
+        <div class="retainer-card">
+          <div class="retainer-tier">פרמיום</div>
+          <div class="retainer-name">Premium</div>
+          <div class="retainer-price">₪15,000</div>
+          <div class="retainer-price-sub">לחודש · כולל מע"מ</div>
+          <div class="retainer-divider"></div>
+          <ul class="retainer-features">
+            <li>כל שירותי החבילה המתקדמת</li>
+            <li>פיתוח פיצ'רים חדשים</li>
+            <li>ייעוץ טכני שוטף</li>
+            <li>עדיפות מקסימלית — תגובה ביום אחד</li>
+            <li>דוח חודשי ומעקב ביצועים</li>
+          </ul>
+          <div class="retainer-badge">
+            <div class="retainer-badge-item">
+              <div class="retainer-badge-val">10</div>
+              <div class="retainer-badge-label">ימים/חודש</div>
+            </div>
+            <div class="retainer-badge-sep"></div>
+            <div class="retainer-badge-item">
+              <div class="retainer-badge-val">יום 1</div>
+              <div class="retainer-badge-label">זמן תגובה</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /retainer-grid -->
+
+      <p class="retainer-note reveal">
+        חבילות התמיכה אינן חלק מהצעת המחיר הנוכחית — הן מתומחרות בנפרד ויופעלו לפי הסכם תחזוקה נפרד. ימים שלא נוצלו אינם עוברים לחודש הבא.
+        עלויות תשתית חיצוניות (שרת, MongoDB, Azure Blob, Mapbox) הן באחריות הלקוח ואינן כלולות.
+      </p>
     </div>
   </section>
 
