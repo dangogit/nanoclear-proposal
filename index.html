@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>הצעת מחיר — Nano Clear Mobile App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #080F1C;
+      --bg2:       #0C1525;
+      --bg3:       #101D30;
+      --card:      #0E1828;
+      --gold:      #C8A04A;
+      --gold-l:    #E0BF6A;
+      --gold-dim:  rgba(200, 160, 74, 0.12);
+      --gold-dim2: rgba(200, 160, 74, 0.06);
+      --text:      #EEE4D0;
+      --text-dim:  #8A7E6E;
+      --text-mid:  #B8AE9E;
+      --green:     #3D9B68;
+      --green-dim: rgba(61, 155, 104, 0.1);
+      --border:    rgba(200, 160, 74, 0.18);
+      --border-s:  rgba(200, 160, 74, 0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Heebo', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      direction: rtl;
+      text-align: right;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0;
+      inset-inline: 0;
+      z-index: 100;
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(8, 15, 28, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-s);
+    }
+
+    .nav-brand {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-mid);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    /* ── Sections base ── */
+    section { position: relative; z-index: 1; }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200, 160, 74, 0.07) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border-s);
+    }
+
+    .hero-eyebrow {
+      font-family: 'Heebo', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero h1 {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: clamp(42px, 8vw, 80px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .hero-client {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.1em;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.55s forwards;
+    }
+
+    .hero-divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 36px;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.7s forwards;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .hero-meta-item {
+      text-align: center;
+    }
+
+    .hero-meta-item .label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .hero-meta-item .value {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--gold-l);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.2s forwards;
+    }
+
+    .hero-scroll span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ── Section headers ── */
+    .section-header {
+      margin-bottom: 48px;
+    }
+
+    .section-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .section-line {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin-top: 20px;
+      margin-inline-start: auto;
+    }
+
+    /* ── Overview ── */
+    .overview {
+      padding: 100px 0;
+      background: var(--bg2);
+    }
+
+    .overview-text {
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text-mid);
+      max-width: 700px;
+      margin-inline-start: auto;
+    }
+
+    .overview-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── Platforms ── */
+    .platforms {
+      padding: 80px 0;
+    }
+
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 640px) {
+      .platforms-grid { grid-template-columns: 1fr; }
+    }
+
+    .platform-card {
+      background: var(--card);
+      padding: 40px 28px;
+      text-align: center;
+      border: 1px solid var(--border-s);
+      transition: background 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .platform-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
+    }
+
+    .platform-card:hover { background: var(--gold-dim2); }
+
+    .platform-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .platform-name {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .platform-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Phases ── */
+    .phases-section {
+      padding: 100px 0;
+      background: var(--bg2);
+    }
+
+    .phase-card {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 0;
+      border: 1px solid var(--border-s);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: var(--card);
+      transition: border-color 0.3s;
+      opacity: 0;
+      transform: translateX(24px);
+    }
+
+    .phase-card.revealed {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+    }
+
+    .phase-card:hover { border-color: var(--border); }
+
+    .phase-num-col {
+      background: var(--gold-dim2);
+      border-inline-end: 1px solid var(--border-s);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 0;
+    }
+
+    .phase-num {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.6;
+    }
+
+    .phase-body {
+      padding: 20px 24px;
+    }
+
+    .phase-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .phase-name {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .phase-meta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .phase-days {
+      font-size: 13px;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    .phase-cost {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .phase-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .phase-items li {
+      font-size: 13.5px;
+      color: var(--text-mid);
+      padding-inline-start: 18px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .phase-items li::before {
+      content: '';
+      position: absolute;
+      inset-inline-start: 0;
+      top: 10px;
+      width: 5px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    /* ── Optional phases ── */
+    .optional-section {
+      padding: 100px 0;
+    }
+
+    .optional-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      background: var(--green-dim);
+      border: 1px solid rgba(61, 155, 104, 0.3);
+      border-radius: 2px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--green);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .optional-note {
+      font-size: 14px;
+      color: var(--text-dim);
+      font-style: italic;
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-inline-start: auto;
+    }
+
+    .opt-card {
+      border: 1px solid rgba(61, 155, 104, 0.2);
+      border-radius: 2px;
+      background: var(--card);
+      overflow: hidden;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateX(24px);
+    }
+
+    .opt-card.revealed {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .opt-card-header {
+      padding: 24px 28px 16px;
+      border-bottom: 1px solid rgba(61, 155, 104, 0.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .opt-card-title {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .opt-card-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--green);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .opt-card-meta {
+      display: flex;
+      gap: 20px;
+    }
+
+    .opt-days, .opt-price {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .opt-price { color: var(--green); font-weight: 600; }
+
+    .opt-card-body {
+      padding: 16px 28px 24px;
+    }
+
+    .opt-desc {
+      font-size: 14px;
+      color: var(--text-mid);
+      margin-bottom: 14px;
+      line-height: 1.7;
+    }
+
+    .opt-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .opt-items li {
+      font-size: 13.5px;
+      color: var(--text-mid);
+      padding-inline-start: 18px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .opt-items li::before {
+      content: '';
+      position: absolute;
+      inset-inline-start: 0;
+      top: 10px;
+      width: 5px;
+      height: 1px;
+      background: var(--green);
+      opacity: 0.6;
+    }
+
+    /* ── Timeline ── */
+    .timeline-section {
+      padding: 100px 0;
+      background: var(--bg2);
+    }
+
+    .timeline-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border-s);
+    }
+
+    .timeline-table th {
+      padding: 14px 18px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      background: rgba(200, 160, 74, 0.06);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .timeline-table td {
+      padding: 12px 18px;
+      font-size: 14px;
+      color: var(--text-mid);
+      border-bottom: 1px solid var(--border-s);
+    }
+
+    .timeline-table tr:last-child td { border-bottom: none; }
+
+    .timeline-table tr:hover td { background: var(--gold-dim2); }
+
+    @media (max-width: 500px) {
+      .timeline-table th:first-child,
+      .timeline-table td:first-child { display: none; }
+    }
+
+    /* ── Pricing ── */
+    .pricing-section {
+      padding: 100px 0;
+    }
+
+    .price-hero {
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, var(--bg3) 0%, var(--card) 100%);
+      border-radius: 2px;
+      padding: 64px 48px;
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .price-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(200, 160, 74, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .price-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .price-amount {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: clamp(52px, 10vw, 96px);
+      font-weight: 700;
+      color: var(--gold-l);
+      line-height: 1;
+      margin-bottom: 16px;
+      direction: ltr;
+    }
+
+    .price-sub {
+      font-size: 15px;
+      color: var(--text-dim);
+      margin-bottom: 32px;
+    }
+
+    .price-breakdown {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .price-item {
+      text-align: center;
+    }
+
+    .price-item .pi-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .price-item .pi-value {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .price-divider {
+      width: 1px;
+      background: var(--border-s);
+      align-self: stretch;
+    }
+
+    /* ── Grand total table ── */
+    .grand-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border-s);
+    }
+
+    .grand-table th {
+      padding: 12px 18px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      background: rgba(200, 160, 74, 0.06);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .grand-table td {
+      padding: 14px 18px;
+      font-size: 14px;
+      color: var(--text-mid);
+      border-bottom: 1px solid var(--border-s);
+    }
+
+    .grand-table .total-row td {
+      background: rgba(200, 160, 74, 0.06);
+      color: var(--gold-l);
+      font-weight: 600;
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 16px;
+      border-bottom: none;
+    }
+
+    .grand-table .opt-row td { color: var(--green); }
+
+    /* ── Terms ── */
+    .terms-section {
+      padding: 80px 0 100px;
+      background: var(--bg2);
+    }
+
+    .terms-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .terms-list li {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border-s);
+      font-size: 14.5px;
+      color: var(--text-mid);
+      line-height: 1.7;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 16px;
+      align-items: baseline;
+      direction: rtl;
+    }
+
+    .terms-list li:last-child { border-bottom: none; }
+
+    .term-num {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.5;
+      text-align: center;
+    }
+
+    .terms-list strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 48px 24px;
+      text-align: center;
+      border-top: 1px solid var(--border-s);
+    }
+
+    .footer-note {
+      font-size: 13px;
+      color: var(--text-dim);
+      font-style: italic;
+      max-width: 600px;
+      margin: 0 auto 20px;
+      line-height: 1.8;
+    }
+
+    .footer-brand {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(0.8); transform-origin: top; }
+      50%       { opacity: 1;   transform: scaleY(1);   transform-origin: top; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* stagger delays */
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* ── Print ── */
+    @media print {
+      nav, .hero-scroll { display: none; }
+      .reveal, .phase-card, .opt-card { opacity: 1 !important; transform: none !important; }
+      body { font-size: 13px; }
+    }
+
+    /* ── Mobile adjustments ── */
+    @media (max-width: 768px) {
+      .price-hero { padding: 40px 24px; }
+      .phase-card { grid-template-columns: 48px 1fr; }
+      .phase-num { font-size: 20px; }
+      .price-breakdown { gap: 24px; }
+      .price-divider { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .phase-header { flex-direction: column; gap: 4px; }
+      .phase-meta { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <span class="nav-brand">NANO CLEAR</span>
+    <ul class="nav-links">
+      <li><a href="#overview">סקירה</a></li>
+      <li><a href="#phases">שלבים</a></li>
+      <li><a href="#optional">אופציונלי</a></li>
+      <li><a href="#pricing">מחיר</a></li>
+      <li><a href="#terms">תנאים</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="hero-eyebrow">הצעת מחיר · 2026</p>
+    <h1>פיתוח <em>אפליקציית מובייל</em></h1>
+    <div class="hero-client">NANO CLEAR</div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="label">היקף</div>
+        <div class="value">23 ימים</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">עלות גרסה 1</div>
+        <div class="value">₪40,250</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">פלטפורמות</div>
+        <div class="value">Web · iOS · Android</div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>גלול</span>
+    </div>
+  </section>
+
+  <!-- 1. Overview -->
+  <section class="overview" id="overview">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-num">01 / סקירה</span>
+        <h2 class="section-title">מה בונים — ולמה ככה</h2>
+        <div class="section-line"></div>
+      </div>
+      <p class="overview-text reveal delay-1">
+        Nano Clear מבקשת לפתח <strong>אפליקציית מובייל</strong> שתאפשר ללקוחותיה לנהל את אוסף השעונים האישי שלהם,
+        לעקוב אחר שווי התיק בזמן אמת, ולהישאר מוגנים — עם <strong>מפת סיכונים אינטראקטיבית</strong> ו-<strong>Travel Mode</strong>
+        שמתריע בכניסה לאזור מסוכן. האתר הקיים watch.nanoclear.com ישודרג במקביל.
+      </p>
+      <br>
+      <p class="overview-text reveal delay-2">
+        הגישה הנבחרת: <strong>קוד מקור אחד לשלוש הפצות</strong> — האתר, iOS ו-Android.
+        כל עדכון עתידי מתפרס אוטומטית לכל הפלטפורמות. אין תחזוקה כפולה.
+      </p>
+    </div>
+  </section>
+
+  <!-- Platforms -->
+  <section class="platforms">
+    <div class="container">
+      <div class="platforms-grid">
+        <div class="platform-card">
+          <span class="platform-icon">🌐</span>
+          <div class="platform-name">אתר אינטרנט</div>
+          <div class="platform-sub">watch.nanoclear.com</div>
+        </div>
+        <div class="platform-card">
+          <span class="platform-icon">📱</span>
+          <div class="platform-name">אפליקציית iOS</div>
+          <div class="platform-sub">App Store</div>
+        </div>
+        <div class="platform-card">
+          <span class="platform-icon">📱</span>
+          <div class="platform-name">אפליקציית Android</div>
+          <div class="platform-sub">Google Play</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Phases -->
+  <section class="phases-section" id="phases">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-num">02 / שלבי עבודה</span>
+        <h2 class="section-title">פירוט העבודה</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <!-- Phase 1 -->
+      <div class="phase-card">
+        <div class="phase-num-col"><span class="phase-num">01</span></div>
+        <div class="phase-body">
+          <div class="phase-header">
+            <span class="phase-name">תשתית טכנית וסביבת פיתוח</span>
+            <div class="phase-meta">
+              <span class="phase-days">2 ימים</span>
+              <span class="phase-cost">₪3,500</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>הקמת הפרויקט — React + Vite + Capacitor (בסיס אחד לאתר, iOS ו-Android)</li>
+            <li>מערכת עיצוב — צבעי המותג, גופנים, רכיבי UI בסיסיים</li>
+            <li>שכבת תקשורת עם השרת — ניהול מטמון, מצבי טעינה ושגיאה</li>
+            <li>ניהול session — שמירת JWT מוצפן ואחסון מאובטח</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase-card">
+        <div class="phase-num-col"><span class="phase-num">02</span></div>
+        <div class="phase-body">
+          <div class="phase-header">
+            <span class="phase-name">מסכי אימות והתחברות</span>
+            <div class="phase-meta">
+              <span class="phase-days">1.5 ימים</span>
+              <span class="phase-cost">₪2,625</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>מסך פתיחה עם מיתוג Nano Clear</li>
+            <li>מסך הכנסת אימייל + בחירת סוג לקוח</li>
+            <li>קוד אימות OTP — 6 ספרות, ספירה לאחור, שליחה מחדש</li>
+            <li>כניסה אוטומטית בהפעלה הבאה</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-card">
+        <div class="phase-num-col"><span class="phase-num">03</span></div>
+        <div class="phase-body">
+          <div class="phase-header">
+            <span class="phase-name">אוסף השעונים האישי</span>
+            <div class="phase-meta">
+              <span class="phase-days">2.5 ימים</span>
+              <span class="phase-cost">₪4,375</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>מסך הבית — שווי תיק השעונים הכולל + רשימת שעונים</li>
+            <li>תג דרגת משתמש (Level 1–5) לפי שווי האוסף</li>
+            <li>מסך פרטי שעון — תמונות, שווי שוק עדכני, תיאור ופיצ'רים</li>
+            <li>עריכת שנת רכישה</li>
+            <li>הודעות פופאפ בכניסה לפי הגדרת המנהל</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase-card">
+        <div class="phase-num-col"><span class="phase-num">04</span></div>
+        <div class="phase-body">
+          <div class="phase-header">
+            <span class="phase-name">קטלוג ועיון בשעונים</span>
+            <div class="phase-meta">
+              <span class="phase-days">2 ימים</span>
+              <span class="phase-cost">₪3,500</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>עיון בקטלוג השלם עם סינון לפי מותג</li>
+            <li>מסך מותגים — רשת לוגואים ממוינת</li>
+            <li>מסך פרטי שעון — הוספה/הסרה מהאוסף האישי</li>
+            <li>בחירת שנת רכישה בעת הוספת שעון</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase-card">
+        <div class="phase-num-col"><span class="phase-num">05</span></div>
+        <div class="phase-body">
+          <div class="phase-header">
+            <span class="phase-name">פרופיל משתמש ודפי תוכן</span>
+            <div class="phase-meta">
+              <span class="phase-days">1.5 ימים</span>
+              <span class="phase-cost">₪2,625</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>מסך פרופיל — שם, אימייל, תמונה ודרגה</li>
+            <li>עריכת פרופיל + העלאת תמונה מהגלריה</li>
+            <li>תנאי שימוש ומדיניות פרטיות</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 6 -->
+      <div class="phase-card">
+        <div class="phase-num-col"><span class="phase-num">06</span></div>
+        <div class="phase-body">
+          <div class="phase-header">
+            <span class="phase-name">מפת סיכונים אינטראקטיבית</span>
+            <div class="phase-meta">
+              <span class="phase-days">3 ימים</span>
+              <span class="phase-cost">₪5,250</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>מפה אינטראקטיבית (Mapbox) עם מארקרים לפי רמת סיכון — קיצוני / גבוה / בינוני</li>
+            <li>מיקום המשתמש אוטומטי בפתיחה — המפה ממוקדת לאזורו</li>
+            <li>Clustering חכם — קיבוץ מארקרים בזום רחב</li>
+            <li>פילטרים לפי רמת סיכון + חיפוש עיר</li>
+            <li>Panel צד עם רשימת הערים המסוכנות הקרובות</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 7 -->
+      <div class="phase-card">
+        <div class="phase-num-col"><span class="phase-num">07</span></div>
+        <div class="phase-body">
+          <div class="phase-header">
+            <span class="phase-name">Travel Mode</span>
+            <div class="phase-meta">
+              <span class="phase-days">3.5 ימים</span>
+              <span class="phase-cost">₪6,125</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>Toggle "Travel Mode" — המשתמש מפעיל מעקב כשהוא יוצא עם שעון</li>
+            <li>מעקב GPS ברקע (Background Geolocation)</li>
+            <li>בדיקת Geofencing — האם המשתמש נכנס לאזור מסוכן</li>
+            <li>Push Notification בכניסה לאזור סיכון: "⚠️ אתה נמצא באזור עם שיעור גניבות גבוה"</li>
+            <li>עמוד הגדרות Travel Mode + הסבר הרשאות</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 8 -->
+      <div class="phase-card">
+        <div class="phase-num-col"><span class="phase-num">08</span></div>
+        <div class="phase-body">
+          <div class="phase-header">
+            <span class="phase-name">Backend: אזורי סיכון + הרחבת Admin</span>
+            <div class="phase-meta">
+              <span class="phase-days">2.5 ימים</span>
+              <span class="phase-cost">₪4,375</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>מודל MongoDB: CrimeZone (עיר, קואורדינטות, רדיוס, רמת סיכון, תיאור)</li>
+            <li>API endpoints: GET /crime-zones עם פילטר גאוגרפי, POST/PUT/DELETE</li>
+            <li>הרחבת Admin Panel — ממשק ניהול אזורי סיכון: הוספה / עריכה / מחיקה</li>
+            <li>טעינת דאטה ראשוני — אזורים ועיר מוכנים מהלקוח</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 9 -->
+      <div class="phase-card">
+        <div class="phase-num-col"><span class="phase-num">09</span></div>
+        <div class="phase-body">
+          <div class="phase-header">
+            <span class="phase-name">אבטחה ותיקוני שרת</span>
+            <div class="phase-meta">
+              <span class="phase-days">1 יום</span>
+              <span class="phase-cost">₪1,750</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>הפעלת אימות JWT על כל נתיבי ה-API</li>
+            <li>הגדרת מפתח הצפנה אמיתי בסביבת הייצור</li>
+            <li>הסרת מידע רגיש מתגובות השרת</li>
+            <li>העברת פרטי גישה למשתני סביבה (Azure, Shopify, SendGrid)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 10 -->
+      <div class="phase-card">
+        <div class="phase-num-col"><span class="phase-num">10</span></div>
+        <div class="phase-body">
+          <div class="phase-header">
+            <span class="phase-name">פריסה ובניית חבילות נייד</span>
+            <div class="phase-meta">
+              <span class="phase-days">2 ימים</span>
+              <span class="phase-cost">₪3,500</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>פריסה לאתר watch.nanoclear.com — מחליף את האתר הקיים</li>
+            <li>בניית חבילת iOS (IPA) מוכנה להגשה על ידי הלקוח</li>
+            <li>בניית חבילת Android (AAB) מוכנה להגשה על ידי הלקוח</li>
+            <li>בדיקות QA סופיות על כל הפלטפורמות</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 11 -->
+      <div class="phase-card">
+        <div class="phase-num-col"><span class="phase-num">11</span></div>
+        <div class="phase-body">
+          <div class="phase-header">
+            <span class="phase-name">ניהול פרויקט ותיאום</span>
+            <div class="phase-meta">
+              <span class="phase-days">1 יום</span>
+              <span class="phase-cost">₪1,750</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>פגישות עדכון שוטפות ומשוב</li>
+            <li>תיקונים קטנים לאורך הפרויקט</li>
+            <li>תיעוד ומסירה סופית</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. Optional -->
+  <section class="optional-section" id="optional">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-num">03 / שלבים עתידיים</span>
+        <h2 class="section-title">תוספות אופציונליות</h2>
+        <div class="section-line"></div>
+      </div>
+      <p class="optional-note reveal">
+        שלבים אלה אינם חלק מגרסה 1. כל אחד ניתן להוסיף בנפרד לאחר השקה, עם הערכת עלות מחייבת.
+      </p>
+
+      <!-- v2 -->
+      <div class="opt-card">
+        <div class="opt-card-header">
+          <div>
+            <div class="opt-card-label">v2 · אופציונלי</div>
+            <div class="opt-card-title">דיווח קהילתי</div>
+          </div>
+          <div class="opt-card-meta">
+            <span class="opt-days">4 ימים</span>
+            <span class="opt-price">+₪7,000</span>
+          </div>
+        </div>
+        <div class="opt-card-body">
+          <p class="opt-desc">
+            משתמשים יכולים לדווח על ניסיון גניבה ישירות מהמפה. דיווחים עוברים אישור מנהל לפני הופעתם.
+            <em style="color: var(--text-dim)">הערה: פירוט flow מורכב של moderation עלול להאריך ל-5 ימים בהתאם לדרישות.</em>
+          </p>
+          <ul class="opt-items">
+            <li>מסך דיווח על אירוע — מיקום אוטומטי, תיאור, העלאת תמונה (אופציונלי)</li>
+            <li>דיווחי משתמשים מופיעים כמארקרים מובחנים על המפה</li>
+            <li>מסך פרטי אירוע — תיאור, תאריך, תמונה</li>
+            <li>Backend: מודל CrimeReport, API, אחסון תמונות ב-Azure Blob</li>
+            <li>Admin Panel: תור אישור / דחייה / מחיקה של דיווחים</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- v3 -->
+      <div class="opt-card">
+        <div class="opt-card-header">
+          <div>
+            <div class="opt-card-label">v3 · אופציונלי</div>
+            <div class="opt-card-title">תכנון מסלול</div>
+          </div>
+          <div class="opt-card-meta">
+            <span class="opt-days">4 ימים</span>
+            <span class="opt-price">+₪7,000</span>
+          </div>
+        </div>
+        <div class="opt-card-body">
+          <p class="opt-desc">
+            משתמשים המתכננים נסיעה יכולים לראות מראש את אזורי הסיכון ביעד — ולקבל המלצות על אזורים להימנע.
+            מייחסם את Mapbox ואת מסד אזורי הסיכון מגרסה 1.
+          </p>
+          <ul class="opt-items">
+            <li>חיפוש יעד (עיר / מדינה) + תאריכי נסיעה</li>
+            <li>ציון בטיחות לעיר היעד + מפה ממוקדת שם</li>
+            <li>רשימת "אזורים להימנע" עם רמת הסיכון שלהם</li>
+            <li>שמירת נסיעות מתוכננות לצפייה מאוחרת</li>
+            <li>Backend: מודל Trip, חישוב ציון בטיחות לפי CrimeZones</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. Timeline -->
+  <section class="timeline-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-num">04 / לוח זמנים</span>
+        <h2 class="section-title">12 שבועות לגרסה 1</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="reveal">
+        <table class="timeline-table">
+          <thead>
+            <tr>
+              <th style="text-align:center">שבועות</th>
+              <th style="text-align:center">ימים</th>
+              <th>שלב</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="text-align:center">1–2</td><td style="text-align:center">2</td><td>תשתית טכנית וסביבת פיתוח</td></tr>
+            <tr><td style="text-align:center">2–3</td><td style="text-align:center">1.5</td><td>מסכי אימות והתחברות</td></tr>
+            <tr><td style="text-align:center">3–5</td><td style="text-align:center">2.5</td><td>אוסף השעונים האישי</td></tr>
+            <tr><td style="text-align:center">5–6</td><td style="text-align:center">2</td><td>קטלוג ועיון בשעונים</td></tr>
+            <tr><td style="text-align:center">6–7</td><td style="text-align:center">1.5</td><td>פרופיל משתמש ודפי תוכן</td></tr>
+            <tr><td style="text-align:center">7–9</td><td style="text-align:center">3</td><td>מפת סיכונים אינטראקטיבית</td></tr>
+            <tr><td style="text-align:center">9–10</td><td style="text-align:center">3.5</td><td>Travel Mode</td></tr>
+            <tr><td style="text-align:center">10–11</td><td style="text-align:center">2.5</td><td>Backend: אזורי סיכון + Admin</td></tr>
+            <tr><td style="text-align:center">11</td><td style="text-align:center">1</td><td>אבטחה ותיקוני שרת</td></tr>
+            <tr><td style="text-align:center">11–12</td><td style="text-align:center">2</td><td>פריסה ובניית חבילות נייד</td></tr>
+            <tr><td style="text-align:center">שוטף</td><td style="text-align:center">1</td><td>ניהול פרויקט ותיאום</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Pricing -->
+  <section class="pricing-section" id="pricing">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-num">05 / מחיר</span>
+        <h2 class="section-title">הצעת מחיר</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="price-hero reveal">
+        <div class="price-label">עלות גרסה 1 — מחיר סופי</div>
+        <div class="price-amount" id="price-counter">₪0</div>
+        <div class="price-sub">23 ימי עבודה × ₪1,750 ליום</div>
+        <div class="price-breakdown">
+          <div class="price-item">
+            <div class="pi-label">תעריף יומי</div>
+            <div class="pi-value">₪1,750</div>
+          </div>
+          <div class="price-divider"></div>
+          <div class="price-item">
+            <div class="pi-label">סה"כ ימים</div>
+            <div class="pi-value">23</div>
+          </div>
+          <div class="price-divider"></div>
+          <div class="price-item">
+            <div class="pi-label">פלטפורמות</div>
+            <div class="pi-value">3</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <table class="grand-table">
+          <thead>
+            <tr>
+              <th>היקף</th>
+              <th style="text-align:center">ימים</th>
+              <th style="text-align:center">עלות</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>גרסה 1 — אפליקציה מלאה + מפת סיכונים + Travel Mode</td>
+              <td style="text-align:center">23</td>
+              <td style="text-align:center">₪40,250</td>
+            </tr>
+            <tr class="opt-row">
+              <td>v2 — דיווח קהילתי (אופציונלי)</td>
+              <td style="text-align:center">+4</td>
+              <td style="text-align:center">+₪7,000</td>
+            </tr>
+            <tr class="opt-row">
+              <td>v3 — תכנון מסלול (אופציונלי)</td>
+              <td style="text-align:center">+4</td>
+              <td style="text-align:center">+₪7,000</td>
+            </tr>
+            <tr class="total-row">
+              <td>כל השלבים כולל אופציונלי</td>
+              <td style="text-align:center">31</td>
+              <td style="text-align:center">₪54,250</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Terms -->
+  <section class="terms-section" id="terms">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-num">06 / תנאים</span>
+        <h2 class="section-title">תנאי התקשרות</h2>
+        <div class="section-line"></div>
+      </div>
+      <ul class="terms-list reveal">
+        <li>
+          <span class="term-num">1</span>
+          <span><strong>תשלום:</strong> 40% מקדמה לפני תחילת העבודה, 30% עם השלמת שלב 5, 30% עם מסירה סופית.</span>
+        </li>
+        <li>
+          <span class="term-num">2</span>
+          <span><strong>תיקונים:</strong> עד 2 סבבי פידבק לכל שלב. שינויים מחוץ לסקופ יחושבו בנפרד.</span>
+        </li>
+        <li>
+          <span class="term-num">3</span>
+          <span><strong>הגשה לחנויות:</strong> חבילות iOS ו-Android מסופקות מוכנות להגשה — הגשה לחנויות היא באחריות הלקוח.</span>
+        </li>
+        <li>
+          <span class="term-num">4</span>
+          <span><strong>גישה:</strong> נדרשת גישה SSH לשרת לצורך הפריסה.</span>
+        </li>
+        <li>
+          <span class="term-num">5</span>
+          <span><strong>בעלות:</strong> כל קוד המקור מועבר לבעלות הלקוח עם תשלום מלא.</span>
+        </li>
+        <li>
+          <span class="term-num">6</span>
+          <span><strong>ציר הזמן:</strong> מחושב ממועד קבלת המקדמה ואישור תחילת עבודה.</span>
+        </li>
+        <li>
+          <span class="term-num">7</span>
+          <span><strong>תוקף ההצעה:</strong> 30 יום ממועד הוצאתה.</span>
+        </li>
+        <li>
+          <span class="term-num">8</span>
+          <span><strong>דאטה ראשוני:</strong> הלקוח מספק טבלת אזורי סיכון (עיר, קואורדינטות, רמת סיכון) לפני תחילת שלב 6. הייבוא למערכת הוא חלק מהעבודה.</span>
+        </li>
+        <li>
+          <span class="term-num">9</span>
+          <span><strong>Mapbox API Key:</strong> נדרש חשבון חינמי ב-mapbox.com. 50,000 טעינות מפה לחודש ללא עלות — נדרש מהלקוח לפני שלב 6.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p class="footer-note">
+      הצעה זו הוכנה בהתבסס על ניתוח מלא של הבקאנד הקיים, ה-API, המודלים והתשתית של Nano Clear.
+      לא נדרש פיתוח בקאנד חדש עבור גרסה 1 — למעט מודול אזורי הסיכון.
+    </p>
+    <div class="footer-brand">NANO CLEAR</div>
+  </footer>
+
+  <script>
+    // ── Intersection Observer for reveal animations ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) {
+          el.target.classList.add('revealed');
+          observer.unobserve(el.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal, .platform-card, .phase-card, .opt-card').forEach((el, i) => {
+      if (el.classList.contains('phase-card') || el.classList.contains('opt-card')) {
+        el.style.transitionDelay = (i % 8) * 0.04 + 's';
+      }
+      observer.observe(el);
+    });
+
+    // ── Price counter animation ──
+    const counterEl = document.getElementById('price-counter');
+    const target = 40250;
+    let started = false;
+
+    const priceObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !started) {
+        started = true;
+        const duration = 1400;
+        const start = performance.now();
+        const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+        function tick(now) {
+          const t = Math.min((now - start) / duration, 1);
+          const val = Math.round(easeOut(t) * target);
+          counterEl.textContent = '₪' + val.toLocaleString('he-IL');
+          if (t < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+    }, { threshold: 0.5 });
+
+    priceObserver.observe(counterEl);
+
+    // ── Nav active state ──
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>
